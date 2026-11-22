@@ -17,14 +17,14 @@ COLUMN_FOR = {
 
 
 class PredictRequest(BaseModel):
-    median_income: float = Field(gt=0, le=20, description="Block median income, in $10,000s")
+    median_income: float = Field(ge=0, le=20, description="Block median income, in $10,000s")
     house_age: float = Field(ge=0, le=100, description="Median house age in years")
-    avg_rooms: float = Field(description="Average number of rooms per household")
-    avg_bedrooms: float = Field(description="Average number of bedrooms per household")
-    population: float = Field(description="Block group population")
-    avg_occupancy: float = Field(description="Average number of household members")
-    latitude: float = Field(description="Block group latitude")
-    longitude: float = Field(description="Block group longitude")
+    avg_rooms: float = Field(ge=0, le=150, description="Average number of rooms per household")
+    avg_bedrooms: float = Field(ge=0, le=38, description="Average number of bedrooms per household")
+    population: float = Field(ge=0, le=40000000, description="Block group population")
+    avg_occupancy: float = Field(ge=0, le=1400, description="Average number of household members")
+    latitude: float = Field(ge=30, le=43, description="Block group latitude")
+    longitude: float = Field(ge=-126, le=-113, description="Block group longitude")
 
     def to_frame(self) -> pd.DataFrame:
         """One-row Dataframe with the columns names"""
