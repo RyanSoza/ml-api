@@ -1,4 +1,4 @@
-.OHONY: install lint format test train
+.PHONY: install lint format test train run docker-build docker-run
 
 install:
 	uv sync
@@ -19,3 +19,9 @@ train:
 
 run:
 	uv run uvicorn ml_api.app:app --reload
+
+docker-build:
+	docker build -t ml-api:dev .
+
+docker-run:
+	docker run --rm -p 8000:8000 -e VERSION=local-docker ml-api:dev
