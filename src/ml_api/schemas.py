@@ -32,5 +32,5 @@ class PredictRequest(BaseModel):
 
 
 class PredictResponse(BaseModel):
-    predictions: float = Field(description="Median house value, in $100,000s")
+    prediction: float = Field(description="Median house value, in $100,000s")
     version: str
