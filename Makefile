@@ -16,3 +16,6 @@ test:
 
 train:
 	uv run python -m ml_api.train
+
+run:
+	uv run uvicorn ml_api.app:app --reload
