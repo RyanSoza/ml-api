@@ -28,8 +28,6 @@ def client(tiny_df, tmp_path):
 
 def test_health(client):
     response = client.get("/health")
-    # Force test to fail
-    assert 1 == 2
     assert response.status_code == 200
     assert response.json() == {"status": "ok", "version": "test"}
 
