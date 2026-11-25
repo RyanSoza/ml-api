@@ -81,8 +81,6 @@ jobs:
         env:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
-          echo "HOOK length: ${#HOOK}"
-          echo "HOOK starts: ${HOOK:0:31
           IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}:${GITHUB_SHA}"
           ENCODED=$(python3 -c "import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=''))" "$IMAGE")
           curl --fail --silent --show-error "${HOOK}&imgURL=${ENCODED}"
