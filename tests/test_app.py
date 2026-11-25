@@ -29,13 +29,14 @@ def client(tiny_df, tmp_path):
 def test_health(client):
     response = client.get("/health")
     assert response.status_code == 200
-    assert response.json() == {"status": "ok", "version": "test"}
+    assert response.json() == {"status": "ok", "version": "test", "service": "ml-api"}
 
 
 def test_predict_returns_a_number(client):
     # POST VALID to /predict; expect 200, a float prediction, version "test"
     response = client.post("/predict", json=VALID)
     assert response.status_code == 200
+    assert isinstance(response.json()["prediction"], float)
     assert response.json()["version"] == "test"
 
 

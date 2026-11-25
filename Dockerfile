@@ -26,6 +26,8 @@ COPY --from=builder /app/.venv /app/.venv
 COPY models ./models
 
 ENV PATH="/app/.venv/bin:$PATH"
+ARG GIT_SHA=dev
+ENV VERSION=$GIT_SHA
 USER app
 EXPOSE 8000
 
