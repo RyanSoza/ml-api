@@ -40,7 +40,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/health")
     def health() -> dict:
-        return {"status": "ok", "version": settings.version}
+        return {"status": "ok", "version": settings.version, "service": "ml-api"}
 
     @app.post("/predict", response_model=PredictResponse)
     def predict_one(body: PredictRequest, request: Request) -> PredictResponse:
