@@ -66,3 +66,20 @@ jobs:
             ${{ env.IMAGE }}:${{ github.sha }}
             ${{ env.IMAGE }}:latest
           build-args: GIT_SHA=${{ github.sha }}
+  deploy:
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Ask Render to deploy this commits's image
+      env:
+        HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      run: |
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}:${GITHUB_SHA}"
+          ENCODED=$(python3 -c "import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=''))" "$IMAGE")
+          curl --fail --silent --show-error "${HOOK}&imgURL=${ENCODED}"
+      - name: Smoke test the live service
+        env:
+          APP_URL: ${{ vars.APP_URL }}
+        run: python3 scripts/smoke_test.py "$APP_URL" "$GITHUB_SHA"
